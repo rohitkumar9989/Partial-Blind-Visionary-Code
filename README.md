@@ -23,4 +23,12 @@ File names | About the folder
 
 # This programme is usefull for the people who have partial blindness like
 	1. Galucoma
-	2.Diabeties
+	1. Diabeties
+
+# Pre information of the code
+
+> The code doesn't come with any pre trained model as the model training is already present in the class function
+> The code Uses Resnet 50 V2 architecture
+> The trail and error methods are in the trail folders
+
+
