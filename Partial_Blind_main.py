@@ -43,7 +43,7 @@ class Help_blind ():
 
     #Returns the cropped image
     return image_flipped_left,image_flipped_2, new
-  def __init__ (self, image):
+  def __init__ (self, image, save_checkpoint=True):
     """
     This class function enables a blind person to
     wlak properly in a open yard with some obstacles,
@@ -80,13 +80,21 @@ class Help_blind ():
     self.model_true.compile(loss=tf.keras.losses.categorical_crossentropy,
                    optimizer=tf.keras.optimizers.Adam(),
                    metrics='accuracy')
-    history=self.model_true.fit(data, epochs=20, steps_per_epoch=len(data), callbacks=[tf.keras.callbacks.LearningRateScheduler(lambda epochs: 1e-4*10**(epochs/200)),
+    
+    #Here the model uses the Learning rate scheduler for the setting its optimial learning rate
+    
+    if save_checkpoint=True:
+      history=self.model_true.fit(data, epochs=20, steps_per_epoch=len(data), callbacks=[tf.keras.callbacks.LearningRateScheduler(lambda epochs: 1e-4*10**(epochs/200)),
                                                                       tf.keras.callbacks.ModelCheckpoint(filepath='/content/checkpoints.ckpt',
                                                                                                          verbose=1,
                                                                                                          save_weight_only=True,
                                                                                                          save_freq='epoch')],
-                            batch_size=20)
+                             batch_size=20)
+    else:
+      history=self.model_true.fit(data, epochs=20, steps_per_epoch=len(data), callbacks=[tf.keras.callbacks.LearningRateScheduler(lambda epochs: 1e-4*10**(epochs/200))]
     self.predicte_sides(model=self.model_true)
+                                  
+                                  
   def predicte_sides(self, model):
     model_true=model
     img=self.image_tensor(image=self.image)
@@ -108,6 +116,8 @@ class Help_blind ():
     for names in list_dir:
       prediction=model_true.predict(tf.expand_dims(names, axis=0))
       preds=classes[prediction.argmax()]
+      plt.title(f'{preds}')
+      plt.imshow(preds)
       print (f"{preds}")
       
       
