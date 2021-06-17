@@ -28,7 +28,17 @@ File names | About the folder
 # Pre information of the code
 
 > The code doesn't come with any pre trained model as the model training is already present in the class function
+
 > The code Uses Resnet 50 V2 architecture
+
 > The trail and error methods are in the trail folders
 
 
+
+# The main things to look after this code are these
+
+> 1. The model takes a long time to be trained hence the model saves the models checkpoints and
+> you can process it after the model has been trained for once. the code is provided in the repo for swapping the model training 
+> function
+
+> 2. There is no need to make an checkpoints dir. Because the model makes it while the model is being trained for the first time
