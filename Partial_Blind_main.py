@@ -10,6 +10,13 @@ import tensorflow_hub as hub
 
 class Help_blind ():
   def image_tensor (self,image):
+    """
+    Converts an image to an tensor file
+    `*Args`
+      `image`: The image is the `image` of the file which has to be converted in to tensors
+      
+    `Returns`: The array of tensors ehich has been converted by the machine
+    """
     img=tf.io.read_file(filename=image,
                         name='image_tensor')
     try:
@@ -25,18 +32,38 @@ class Help_blind ():
     """
     This function crops the edges of the images for the left centre and
     right position sof the image
+    
+    `*Args`
+      `img`: The `img` is the tensor of the image which has been converted into tensors
+      
+    `Returns`: An array of tensors which has been spliited in the form of left, centre, right of the image
+    
+    For example:
+    
+    `
+    #Pass the image tensor function insude the splitter function just to convert the image into tensor
+    right, centre, left=self.splitter (self.image_tensor(image))
+    plt.imshoe(right)
+    plt.figure()
+    plt.imshow(centre)
+    plt.figure()
+    plt.imshow(left)
+    
+    `
     """
     image_flipped_centre=tf.image.flip_left_right(img)
     #Flipping the image
-
+    #Centre cropping of the image
     image_flipped_centre=tf.keras.layers.Cropping1D(cropping=(90, 1))(image_flipped_centre)
     image_flipped_2=tf.image.flip_left_right(image_flipped_centre)
     image_flipped_2=tf.image.resize(tf.keras.layers.Cropping1D(cropping=(50, 1))(image_flipped_2), size=(224, 224))
     new = tf.keras.layers.Cropping1D(cropping=(150, 1))(img)
-
+    
+    #Left side cropping of the image
     new=tf.image.resize(new, size=(224, 224))
     image_flipped_left=tf.image.flip_left_right(img)
-
+    
+    #Right side cropping of the image
     image_flipped_left=tf.keras.layers.Cropping1D(cropping=(170, 1))(image_flipped_left)
     image_flipped_left=tf.image.flip_left_right(image_flipped_left)
     image_flipped_left=tf.image.resize(image_flipped_left, size=(224, 224))
