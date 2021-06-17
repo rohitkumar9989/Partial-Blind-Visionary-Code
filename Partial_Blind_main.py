@@ -70,7 +70,7 @@ class Help_blind ():
 
     #Returns the cropped image
     return image_flipped_left,image_flipped_2, new
-  def __init__ (self, image, save_checkpoint=True):
+  def __init__ (self, image, save_checkpoint=True, saved_checkpoints=False):
     """
     This class function enables a blind person to
     wlak properly in a open yard with some obstacles,
@@ -109,17 +109,27 @@ class Help_blind ():
                    metrics='accuracy')
     
     #Here the model uses the Learning rate scheduler for the setting its optimial learning rate
+    if saved_checpoints=False:
     
-    if save_checkpoint=True:
-      history=self.model_true.fit(data, epochs=20, steps_per_epoch=len(data), callbacks=[tf.keras.callbacks.LearningRateScheduler(lambda epochs: 1e-4*10**(epochs/200)),
-                                                                      tf.keras.callbacks.ModelCheckpoint(filepath='/content/checkpoints.ckpt',
-                                                                                                         verbose=1,
-                                                                                                         save_weight_only=True,
-                                                                                                         save_freq='epoch')],
-                             batch_size=20)
-    else:
-      history=self.model_true.fit(data, epochs=20, steps_per_epoch=len(data), callbacks=[tf.keras.callbacks.LearningRateScheduler(lambda epochs: 1e-4*10**(epochs/200))]
-    self.predicte_sides(model=self.model_true)
+      if save_checkpoint=True:
+        history=self.model_true.fit(data, epochs=20, steps_per_epoch=len(data), callbacks=[tf.keras.callbacks.LearningRateScheduler(lambda epochs: 1e-4*10**(epochs/200)),
+                                                                        tf.keras.callbacks.ModelCheckpoint(filepath='/content/checkpoints.ckpt',
+                                                                                                           verbose=1,
+                                                                                                           save_weight_only=True,
+                                                                                                           save_freq='epoch')],
+                               batch_size=20)
+      else:
+        history=self.model_true.fit(data, epochs=20, steps_per_epoch=len(data), callbacks=[tf.keras.callbacks.LearningRateScheduler(lambda epochs: 1e-4*10**(epochs/200))]
+      self.predicte_sides(model=self.model_true)
+                                    
+                                    
+    if svaed_checkpoints=True:
+      try:
+        self.model_true.load_weights('/content/checkpoints.ckpt')
+        self.predicte_sides(model=self.model_true)
+      except Exception as e:
+        print ("The model has not been saved")
+                                   
                                   
                                   
   def predicte_sides(self, model):
