@@ -104,8 +104,20 @@ class Help_blind ():
                                        tf.keras.layers.Dense(14, activation='relu'),
                                        tf.keras.layers.Dense(len(os.listdir('/content/drive/MyDrive/Data_for_blind')), activation='softmax')
     ])
+    
+    """
+    The learning rate of the Adam is taken with the help of the callbacks of the tensorflow laerning rate scheduler 
+    the code goes as follows ans the images are in the images forlder,
+    `tf.keras.callbacks.LearningRateScheduler(lambda epochs: 1e-4*10**(epochs/200))`
+    
+    and plottin g the resluts will show us which is the ideal learning rate
+    
+    `lrs=1e-4*10**(np.arange(0, 20)/200)
+    plt.semilogx(lrs, history.history['loss'])`
+    """
+    
     self.model_true.compile(loss=tf.keras.losses.categorical_crossentropy,
-                   optimizer=tf.keras.optimizers.Adam(),
+                   optimizer=tf.keras.optimizers.Adam(learning_rate=0.000131),
                    metrics='accuracy')
     
     #Here the model uses the Learning rate scheduler for the setting its optimial learning rate
