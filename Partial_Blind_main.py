@@ -171,5 +171,7 @@ class Help_blind ():
       
       
       
- #This function then creates and gives the prediction as divided into three segments
+ #This function then creates and gives the prediction as divided into three segments, and then predicts the images accordingly,
+ #From the models real data test results it gives out the corresct predictions and rarely it provides wrong predcition if models 
+ #accuracy is not good and loss rate is not good
  
