@@ -1,0 +1,13 @@
+                The materials you are going to need is
+------------------------------------------------------------------------------
+
+The google file link from where you can install the images
+
+link =  https://drive.google.com/drive/folders/1RDLe68NgqsIGclB58vRUYv8exz3rIswb?usp=sharing
+
+Make sure you have installed
+
+--> tensorflow==2.2.0
+--> opencv==1
+--> Matplotlib
+--> tensorflow_hub
